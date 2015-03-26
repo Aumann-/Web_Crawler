@@ -11,17 +11,13 @@ import urllib, time, datetime
 
 def get_page(url):
     try:
-        #print 'Success'
         return urllib.urlopen(url).read()
     except:
-        #print 'Fail'
         return ''
 
 def get_next_target(page):
     start_link = page.find('<a href=')
     if start_link == -1:
-        #print 'No Links Found'
-        #wait = input("@>")
         return '0',-1
     start_quote = page.find('"', start_link)
     end_quote = page.find('"', start_quote + 1)
@@ -34,7 +30,6 @@ def get_all_links(page):
     while True:
         url,endpos = get_next_target(page)
         if endpos == -1:
-            #print 'get_all_links break'
             break
         else:
             print 'Got: ' + url
@@ -91,7 +86,6 @@ def crawl_web(seed):
             if (c > 0):
                 counters.append(str(c) + ' from ' + page)
             tocrawl = tocrawl + links
-            #tocrawl = check_crawled(tocrawl, crawled, dups)
             crawled.append(page)
             textfile.write(page + '\n')
             printed = printed + 1
@@ -108,8 +102,6 @@ def crawl_web(seed):
             #//////
             #if at the origin, print its tier line
             if (page == seed):
-                #temp = counters[0]
-                #counters.pop(0)
                 textfile.write('\n' + temp + '\n\n')
                 printed = 0
             #if it has printed the appropriate amount of links from last tier line
@@ -136,6 +128,7 @@ def crawl_web(seed):
                 check_flag = False
                 counters.pop(0)
             #
+            textfile.write(page + '\n') #write link to crawled file
             dups.write(page + '\n') #write link to duplicates file
             #if it has printed the appropriate amount of links from last tier line
             #print next tier line
@@ -146,7 +139,7 @@ def crawl_web(seed):
                 toprint = ''
                 check_flag = True
         #Ask every x links to quit
-        if count % 360 == 0:
+        if count % 1500 == 0:
             print datetime.datetime.now().time()
             print 'Stop?'
             com = input('@>')
@@ -161,8 +154,8 @@ print "Enter URL"
 myurl = input("@")
 links = crawl_web(myurl)
 #print all links found but not crawled to second file
-textf = file('tocrawl.txt','wt')
+tc = file('tocrawl.txt','wt')
 for i in links:
-    textf.write(i + '\n')
-textf.close()
+    tc.write(i + '\n')
+tc.close()
 raw_input('Ready to Quit ')
