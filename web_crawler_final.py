@@ -102,13 +102,13 @@ def crawl_web(seed):
             #//////
             #if at the origin, print its tier line
             if (page == seed):
-                textfile.write('\n' + temp + '\n\n')
+                textfile.write('\n' + str(temp) + '\n\n')
                 printed = 0
             #if it has printed the appropriate amount of links from last tier line
             #print next tier line
             elif (printed == int(toprint)):
                 temp = counters[0]
-                textfile.write('\n' + temp + '\n\n')
+                textfile.write('\n' + str(temp) + '\n\n')
                 printed = 0
                 toprint = ''
                 check_flag = True
