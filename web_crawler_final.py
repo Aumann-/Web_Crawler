@@ -9,12 +9,15 @@
 #           1. Move caluclation for toprint to its own procedure *DONE*
 import urllib, time, datetime
 
+#open th epages' html code to get links
 def get_page(url):
     try:
         return urllib.urlopen(url).read()
     except:
         return ''
 
+#procedure to find each link on the current page
+    #only works for links using <a href> tags
 def get_next_target(page):
     start_link = page.find('<a href=')
     if start_link == -1:
@@ -24,9 +27,11 @@ def get_next_target(page):
     url = page[start_quote + 1:end_quote]
     return url, end_quote
 
+#procedure to get all liks by calling get next target
 def get_all_links(page):
     links = []
     c = 0
+    got_c = 0
     while True:
         url,endpos = get_next_target(page)
         if endpos == -1:
@@ -35,10 +40,14 @@ def get_all_links(page):
             print 'Got: ' + url
             links.append(url)
             page = page[endpos:]
+            got_c = got_c + 1
+            if (got_c >= 1000): #temp fix for infinite got loop for certain sites
+                break
     c = len(links)
     return links, c
 
 #procedure to remove url from tocrawl if it has already been crawled
+#this isn't used anymore
 def check_crawled(tocrawl, crawled, dups):
     f_tocrawl = []
     s_tocrawl = set()
@@ -52,6 +61,7 @@ def check_crawled(tocrawl, crawled, dups):
                 s_tocrawl.add(i)
     return f_tocrawl
 
+#get int value for how many links to print before next tier line
 def get_toprint(counters):
     check = 0
     toprint = ''
