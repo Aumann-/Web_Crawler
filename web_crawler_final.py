@@ -134,7 +134,7 @@ def crawl_web(seed):
             #print next tier line
             if (printed == int(toprint)):
                 temp = counters[0]
-                textfile.write('\n' + temp + '\n\n')
+                textfile.write('\n' + str(temp) + '\n\n')
                 printed = 0
                 toprint = ''
                 check_flag = True
