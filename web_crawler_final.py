@@ -116,7 +116,7 @@ def crawl_web(seed):
                 printed = 0
             #if it has printed the appropriate amount of links from last tier line
             #print next tier line
-            elif (printed == int(toprint)):
+            elif (printed == int(toprint) and len(counters) > 0):
                 temp = counters[0]
                 textfile.write('\n' + str(temp) + '\n\n')
                 printed = 0
@@ -142,7 +142,7 @@ def crawl_web(seed):
             dups.write(page + '\n') #write link to duplicates file
             #if it has printed the appropriate amount of links from last tier line
             #print next tier line
-            if (printed == int(toprint)):
+            if (printed == int(toprint) and len(counters) > 0):
                 temp = counters[0]
                 textfile.write('\n' + str(temp) + '\n\n')
                 printed = 0
